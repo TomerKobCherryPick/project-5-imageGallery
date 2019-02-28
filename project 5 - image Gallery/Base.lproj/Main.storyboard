@@ -74,6 +74,9 @@
                                         <rect key="frame" x="302" y="0.0" width="37.666666666666686" height="30"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="+"/>
+                                        <connections>
+                                            <action selector="touchAddImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AQn-8z-MKw"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <constraints>
@@ -96,6 +99,7 @@
                     </view>
                     <connections>
                         <outlet property="imageGalleryCollectionView" destination="FK3-kE-1Uy" id="xBK-7X-0G5"/>
+                        <outlet property="urlTextField" destination="JaT-GK-gls" id="e3E-PR-qgW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

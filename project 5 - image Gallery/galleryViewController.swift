@@ -9,7 +9,7 @@
 import UIKit
 
 class galleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
-    
+    @IBOutlet weak var urlTextField: UITextField!
     var imagesUrl: [URL] =
         [URL(string: "https://i.dietdoctor.com/wp-content/uploads/2018/07/starchyfoods.jpg?auto=compress%2Cformat&w=800&h=388&fit=crop")!,
          URL(string: "https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/05/28/Pictures/_c618b53a-6262-11e8-a998-12ee0acfa260.jpg")!,
@@ -39,6 +39,14 @@ class galleryViewController: UIViewController, UICollectionViewDataSource, UICol
         cellWidth = newWidth
         DispatchQueue.main.async {
             self.flowLayout?.invalidateLayout()
+        }
+    }
+    @IBAction func touchAddImage(_ sender: Any) {
+        if let url =  urlTextField?.text  {
+            if let validUrl = URL(string: url){
+                imagesUrl.append(validUrl)
+                imageGalleryCollectionView.insertItems(at: [IndexPath(row: imagesUrl.count - 1, section: 0)])
+            }
         }
     }
     
