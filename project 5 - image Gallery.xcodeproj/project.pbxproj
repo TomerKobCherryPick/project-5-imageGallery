@@ -8,22 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		D30CDC3F222693F000FC4E3E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30CDC3E222693F000FC4E3E /* AppDelegate.swift */; };
-		D30CDC41222693F000FC4E3E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30CDC40222693F000FC4E3E /* ViewController.swift */; };
 		D30CDC44222693F000FC4E3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D30CDC42222693F000FC4E3E /* Main.storyboard */; };
 		D30CDC47222693F000FC4E3E /* project_5___image_Gallery.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D30CDC45222693F000FC4E3E /* project_5___image_Gallery.xcdatamodeld */; };
 		D30CDC49222693F100FC4E3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D30CDC48222693F100FC4E3E /* Assets.xcassets */; };
 		D30CDC4C222693F100FC4E3E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D30CDC4A222693F100FC4E3E /* LaunchScreen.storyboard */; };
+		D30CDC552226978F00FC4E3E /* imageGalleryTableTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30CDC542226978F00FC4E3E /* imageGalleryTableTableViewController.swift */; };
+		D30CDC572226A88300FC4E3E /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30CDC562226A88300FC4E3E /* Utilities.swift */; };
+		D30CDC5B2226C95800FC4E3E /* imageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30CDC5A2226C95800FC4E3E /* imageCollectionViewCell.swift */; };
+		D30CDC5F2226D98200FC4E3E /* galleryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30CDC5E2226D98200FC4E3E /* galleryViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D30CDC3B222693F000FC4E3E /* project 5 - image Gallery.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "project 5 - image Gallery.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D30CDC3E222693F000FC4E3E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D30CDC40222693F000FC4E3E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D30CDC43222693F000FC4E3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D30CDC46222693F000FC4E3E /* project_5___image_Gallery.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "project_5___image_Gallery.xcdatamodel"; sourceTree = "<group>"; };
 		D30CDC48222693F100FC4E3E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D30CDC4B222693F100FC4E3E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D30CDC4D222693F100FC4E3E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D30CDC542226978F00FC4E3E /* imageGalleryTableTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageGalleryTableTableViewController.swift; sourceTree = "<group>"; };
+		D30CDC562226A88300FC4E3E /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		D30CDC5A2226C95800FC4E3E /* imageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imageCollectionViewCell.swift; sourceTree = "<group>"; };
+		D30CDC5E2226D98200FC4E3E /* galleryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = galleryViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +62,26 @@
 		D30CDC3D222693F000FC4E3E /* project 5 - image Gallery */ = {
 			isa = PBXGroup;
 			children = (
-				D30CDC3E222693F000FC4E3E /* AppDelegate.swift */,
-				D30CDC40222693F000FC4E3E /* ViewController.swift */,
-				D30CDC42222693F000FC4E3E /* Main.storyboard */,
-				D30CDC48222693F100FC4E3E /* Assets.xcassets */,
-				D30CDC4A222693F100FC4E3E /* LaunchScreen.storyboard */,
 				D30CDC4D222693F100FC4E3E /* Info.plist */,
-				D30CDC45222693F000FC4E3E /* project_5___image_Gallery.xcdatamodeld */,
+				D30CDC532226942200FC4E3E /* supporting files */,
+				D30CDC42222693F000FC4E3E /* Main.storyboard */,
+				D30CDC5E2226D98200FC4E3E /* galleryViewController.swift */,
+				D30CDC5A2226C95800FC4E3E /* imageCollectionViewCell.swift */,
+				D30CDC542226978F00FC4E3E /* imageGalleryTableTableViewController.swift */,
+				D30CDC48222693F100FC4E3E /* Assets.xcassets */,
 			);
 			path = "project 5 - image Gallery";
+			sourceTree = "<group>";
+		};
+		D30CDC532226942200FC4E3E /* supporting files */ = {
+			isa = PBXGroup;
+			children = (
+				D30CDC562226A88300FC4E3E /* Utilities.swift */,
+				D30CDC3E222693F000FC4E3E /* AppDelegate.swift */,
+				D30CDC4A222693F100FC4E3E /* LaunchScreen.storyboard */,
+				D30CDC45222693F000FC4E3E /* project_5___image_Gallery.xcdatamodeld */,
+			);
+			path = "supporting files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +155,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D30CDC572226A88300FC4E3E /* Utilities.swift in Sources */,
 				D30CDC47222693F000FC4E3E /* project_5___image_Gallery.xcdatamodeld in Sources */,
-				D30CDC41222693F000FC4E3E /* ViewController.swift in Sources */,
+				D30CDC5B2226C95800FC4E3E /* imageCollectionViewCell.swift in Sources */,
 				D30CDC3F222693F000FC4E3E /* AppDelegate.swift in Sources */,
+				D30CDC552226978F00FC4E3E /* imageGalleryTableTableViewController.swift in Sources */,
+				D30CDC5F2226D98200FC4E3E /* galleryViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
