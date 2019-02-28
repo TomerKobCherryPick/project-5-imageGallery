@@ -17,8 +17,8 @@ class imageGalleryTableTableViewController: UITableViewController {
                    URL(string: "https://www.sparkpeople.com/news/genericpictures/bigpictures/carbtruth_header.png")!]
         
         , "guitars" : [URL(string: "https://images.reverb.com/image/upload/s--dfW9xmtS--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1489275409/sicf27nru9awzyaxucig.jpg")!,
-        URL(string: "https://i.ytimg.com/vi/SRsciUOWkOc/maxresdefault.jpg")!]
-    
+                       URL(string: "https://i.ytimg.com/vi/SRsciUOWkOc/maxresdefault.jpg")!]
+        
     ]
     // MARK: - Table view data source
     
@@ -34,8 +34,14 @@ class imageGalleryTableTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         // Configure the cell...
-        let cell = tableView.dequeueReusableCell(withIdentifier: "galleriesCell", for: indexPath)
-        cell.textLabel?.text =  indexPath.section == 0 ? galleries[indexPath.row] : recentlyDeleted[indexPath.row]
+        let cell: UITableViewCell
+        if indexPath.section == 0 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "galleriesCell", for: indexPath)
+            cell.textLabel?.text = galleries[indexPath.row]
+        } else {
+            cell = tableView.dequeueReusableCell(withIdentifier: "deletedGalleriesCell", for: indexPath)
+            cell.textLabel?.text = recentlyDeleted[indexPath.row]
+        }
         return cell
     }
     
@@ -53,7 +59,7 @@ class imageGalleryTableTableViewController: UITableViewController {
         if let identifier = segue.identifier {
             switch identifier {
             case "showGallery":
-                if let cell = sender as? UITableViewCell, let indexPath = tableView.indexPath(for: cell) {
+                if let cell = sender as? UITableViewCell, let _ = tableView.indexPath(for: cell) {
                     let galleryTitle = cell.textLabel?.text
                     segue.destination.navigationItem.title = galleryTitle
                     if let gallery = (segue.destination as? galleryViewController) {
@@ -63,7 +69,6 @@ class imageGalleryTableTableViewController: UITableViewController {
                         }
                     }
                 }
-           
             default: break
             }
         }
@@ -85,17 +90,29 @@ class imageGalleryTableTableViewController: UITableViewController {
                 recentlyDeleted.append(galleries.remove(at: indexPath.row))
                 tableView.reloadData()
             } else {
+                let nameOfGalleryToDelete = tableView.cellForRow(at: indexPath)?.textLabel?.text
                 recentlyDeleted.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: .fade)
+                galleryToUrlMap.removeValue(forKey: nameOfGalleryToDelete!)
             }
-          
             // Delete the row from the data source
-           
+            
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
     
+    override func tableView(_ tableView: UITableView, leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        if indexPath.section == 1 {
+        let action  = UIContextualAction(style: .normal, title: "Undelete", handler: {action,tableView,completionHandler  in
+            self.galleries.append(self.recentlyDeleted.remove(at: indexPath.row))
+            self.tableView.reloadData()
+        } )
+        return UISwipeActionsConfiguration(actions: [action])
+        } else {
+            return UISwipeActionsConfiguration(actions: [])
+        }
+    }
     /*
      // Override to support rearranging the table view.
      override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
