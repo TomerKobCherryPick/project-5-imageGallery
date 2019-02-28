@@ -111,14 +111,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hgy-Ws-Iob">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="778"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="ycN-5W-lfZ" firstAttribute="trailing" secondItem="hgy-Ws-Iob" secondAttribute="trailing" id="OWk-b5-7xC"/>
                             <constraint firstItem="hgy-Ws-Iob" firstAttribute="leading" secondItem="ycN-5W-lfZ" secondAttribute="leading" id="eCU-cF-3m2"/>
-                            <constraint firstAttribute="bottom" secondItem="hgy-Ws-Iob" secondAttribute="bottom" id="kk3-JU-0FI"/>
+                            <constraint firstAttribute="bottom" secondItem="hgy-Ws-Iob" secondAttribute="bottom" constant="34" id="kk3-JU-0FI"/>
                             <constraint firstItem="hgy-Ws-Iob" firstAttribute="top" secondItem="jrz-rG-lr8" secondAttribute="top" id="sDW-SZ-CGo"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ycN-5W-lfZ"/>

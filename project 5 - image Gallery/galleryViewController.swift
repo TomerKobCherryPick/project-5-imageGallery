@@ -15,15 +15,30 @@ class galleryViewController: UIViewController, UICollectionViewDataSource, UICol
          URL(string: "https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/05/28/Pictures/_c618b53a-6262-11e8-a998-12ee0acfa260.jpg")!,
          URL(string: "https://www.sparkpeople.com/news/genericpictures/bigpictures/carbtruth_header.png")!]
     var imagesSize = [Int:CGSize]()
-    
+    var cellWidth:CGFloat = 300
     var flowLayout: UICollectionViewFlowLayout? {
         return imageGalleryCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout
     }
-
+    
     @IBOutlet weak var imageGalleryCollectionView: UICollectionView! {
         didSet {
             imageGalleryCollectionView.dataSource = self
             imageGalleryCollectionView.delegate = self
+            let pinchGestureRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(pinchGestureToScaleCells))
+            imageGalleryCollectionView.addGestureRecognizer(pinchGestureRecognizer)
+        }
+        
+    }
+    @objc func pinchGestureToScaleCells(_ recognizer: UIPinchGestureRecognizer) {
+        var newWidth = cellWidth * recognizer.scale
+        if newWidth > imageGalleryCollectionView.contentSize.width {
+            newWidth = imageGalleryCollectionView.contentSize.width
+        } else if newWidth < CGFloat(100){
+            newWidth =  CGFloat(100)
+        }
+        cellWidth = newWidth
+        DispatchQueue.main.async {
+            self.flowLayout?.invalidateLayout()
         }
     }
     
@@ -45,7 +60,7 @@ class galleryViewController: UIViewController, UICollectionViewDataSource, UICol
                 let urlContents = try? Data(contentsOf: url)
                 if imageCollectionViewCell != nil {
                     if let imageData = urlContents {
-                        self.imagesSize[indexPath.row] = self.calulateSize(originalImage: UIImage(data: imageData))
+                        self.imagesSize[indexPath.row] =  UIImage(data: imageData)?.size
                         //once image was found update the layout and the view for the cell
                         DispatchQueue.main.async {
                             self.flowLayout?.invalidateLayout()
@@ -58,22 +73,31 @@ class galleryViewController: UIViewController, UICollectionViewDataSource, UICol
         }
         return cell
     }
-   private func calulateSize(originalImage: UIImage?) ->  CGSize{
+    private func calulateSize(originalImage: UIImage?) ->  CGSize{
         if let originalSize = originalImage?.size {
             let aspectRatio = originalSize.height / originalSize.width
-            let width = CGFloat(300)
-            let height = aspectRatio * width
-            return CGSize(width: width, height: height)
+            let height = aspectRatio * cellWidth
+            return CGSize(width: cellWidth, height: height)
         } else {
-              return CGSize(width: 300, height: 300)
+            return CGSize(width: cellWidth, height: 300)
         }
-      
+        
+    }
+    private func calulateSize(originalSize: CGSize?) ->  CGSize{
+        if originalSize != nil {
+            let aspectRatio = originalSize!.height / originalSize!.width
+            let height = aspectRatio * cellWidth
+            return CGSize(width: cellWidth, height: height)
+        } else {
+            return CGSize(width: cellWidth, height: 300)
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
-        return imagesSize[indexPath.row] != nil ? imagesSize[indexPath.row]! : CGSize(width: 300, height: 300)
-     }
+        return imagesSize[indexPath.row] != nil ? calulateSize(originalSize: imagesSize[indexPath.row]) : CGSize(width: cellWidth, height: 300)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
