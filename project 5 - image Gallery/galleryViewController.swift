@@ -9,16 +9,15 @@
 import UIKit
 
 class galleryViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    weak var delegate: galleryViewControllerDelegate?
     @IBOutlet weak var urlTextField: UITextField!
-    var imagesUrl: [URL] =
-        [URL(string: "https://i.dietdoctor.com/wp-content/uploads/2018/07/starchyfoods.jpg?auto=compress%2Cformat&w=800&h=388&fit=crop")!,
-         URL(string: "https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/05/28/Pictures/_c618b53a-6262-11e8-a998-12ee0acfa260.jpg")!,
-         URL(string: "https://www.sparkpeople.com/news/genericpictures/bigpictures/carbtruth_header.png")!]
+    var imagesUrl = [URL]()
     var imagesSize = [Int:CGSize]()
     var cellWidth:CGFloat = 300
     var flowLayout: UICollectionViewFlowLayout? {
         return imageGalleryCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout
     }
+
     
     @IBOutlet weak var imageGalleryCollectionView: UICollectionView! {
         didSet {
@@ -46,6 +45,7 @@ class galleryViewController: UIViewController, UICollectionViewDataSource, UICol
             if let validUrl = URL(string: url){
                 imagesUrl.append(validUrl)
                 imageGalleryCollectionView.insertItems(at: [IndexPath(row: imagesUrl.count - 1, section: 0)])
+                delegate?.addUrl(url: validUrl, galleryName: navigationItem.title!)
             }
         }
     }

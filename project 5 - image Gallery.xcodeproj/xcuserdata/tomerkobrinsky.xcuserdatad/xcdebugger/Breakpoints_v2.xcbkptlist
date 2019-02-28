@@ -138,7 +138,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "project 5 - image Gallery/galleryViewController.swift"
-            timestampString = "573058667.9885"
+            timestampString = "573062820.799643"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "62"
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "project 5 - image Gallery/galleryViewController.swift"
-            timestampString = "573058667.988562"
+            timestampString = "573062820.800437"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "45"
-            endingLineNumber = "45"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
             landmarkName = "touchAddImage(_:)"
             landmarkType = "7">
          </BreakpointContent>
