@@ -135,7 +135,7 @@ extension UIImage
 }
 
 extension String {
-    func madeUnique(withRespectTo otherStrings: [String]) -> String {
+   func madeUnique(withRespectTo otherStrings: [String]) -> String {
         var possiblyUnique = self
         var uniqueNumber = 1
         while otherStrings.contains(possiblyUnique) {

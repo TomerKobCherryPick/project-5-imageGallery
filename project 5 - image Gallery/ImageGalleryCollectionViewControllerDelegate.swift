@@ -7,6 +7,7 @@
 //
 
 import Foundation
-protocol galleryViewControllerDelegate: class {
+protocol ImageGalleryCollectionViewControllerDelegate: class {
     func addUrl(url: URL, galleryName: String)
+    func deleteUrl(index: Int, galleryName: String)
 }
