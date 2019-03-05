@@ -16,7 +16,7 @@ class ImageGalleryCollectionViewController: UIViewController, UICollectionViewDa
         }
     }
     var imagesUrl = [URL]()
-    var imagesSize = [Int:CGSize]()
+    var imagesSize = [URL:CGSize]()
     var cellWidth:CGFloat = 300
     var flowLayout: UICollectionViewFlowLayout? {
         return imageGalleryCollectionView?.collectionViewLayout as? UICollectionViewFlowLayout
@@ -49,19 +49,23 @@ class ImageGalleryCollectionViewController: UIViewController, UICollectionViewDa
         }
     }
     @IBAction func touchAddImage(_ sender: Any) {
-        if let url =  urlTextField?.text  {
+        if let url =  urlTextField?.text {
             if let validUrl = URL(string: url) {
-                urlTextField.text = ""
-                //adding the image to the model
-                DispatchQueue.global(qos: .userInteractive).sync {
-                    imagesUrl.append(validUrl)
+                if !imagesUrl.contains(validUrl) {
+                    urlTextField.text = ""
+                    //adding the image to the model
+                    DispatchQueue.global(qos: .userInteractive).sync {
+                        imagesUrl.append(validUrl)
+                    }
+                    //adding the image to the collection view
+                    DispatchQueue.main.async {[weak self] in
+                        self?.imageGalleryCollectionView.insertItems(at: [IndexPath(row: self!.imagesUrl.count - 1, section: 0)])
+                    }
+                    //updating the tableview controller that we added a url
+                    delegate?.addUrl(url: validUrl, galleryName: navigationItem.title!)
+                } else {
+                    urlTextField.text = "image already in the gallery"
                 }
-                //adding the image to the collection view
-                DispatchQueue.main.async {
-                    self.imageGalleryCollectionView.insertItems(at: [IndexPath(row: self.imagesUrl.count - 1, section: 0)])
-                }
-                //updating the tableview controller that we added a url
-                delegate?.addUrl(url: validUrl, galleryName: navigationItem.title!)
             }
         }
     }
@@ -76,24 +80,22 @@ class ImageGalleryCollectionViewController: UIViewController, UICollectionViewDa
             imageCollectionViewCell.indexOfUrl = indexPath.row
             imageCollectionViewCell.delegate = self
             //show the user that the images are being fetched
-            DispatchQueue.main.async {
-                imageCollectionViewCell.imageView.image = nil
-                imageCollectionViewCell.indicator.startAnimating()
+            DispatchQueue.main.async { [weak imageCollectionViewCell] in
+                imageCollectionViewCell?.imageView.image = nil
+                imageCollectionViewCell?.indicator.startAnimating()
             }
             //start fetching the images
             DispatchQueue.global(qos: .userInitiated).async {[weak imageCollectionViewCell] in
-                let url = self.imagesUrl[indexPath.row]
-                let urlContents = try? Data(contentsOf: url)
-                if imageCollectionViewCell != nil {
-                    if let imageData = urlContents {
-                        self.imagesSize[indexPath.row] =  UIImage(data: imageData)?.size
-                        //once image was found update the layout and the view for the cell
-                        if imageCollectionViewCell?.indexOfUrl == indexPath.row {
-                            DispatchQueue.main.async {
-                                imageCollectionViewCell?.imageView.image = UIImage(data: imageData)
-                                imageCollectionViewCell?.indicator.stopAnimating()
-                                self.flowLayout?.invalidateLayout()
-                            }
+                let urlToFetch = self.imagesUrl[imageCollectionViewCell!.indexOfUrl!]
+                let urlContents = try? Data(contentsOf: urlToFetch)
+                if let imageData = urlContents {
+                    self.imagesSize[urlToFetch] = UIImage(data: imageData)?.size
+                    //once image was found update the layout and the view for the cell
+                    DispatchQueue.main.async {
+                        if urlToFetch == self.imagesUrl[imageCollectionViewCell!.indexOfUrl!] {
+                            imageCollectionViewCell?.imageView.image = UIImage(data: imageData)
+                            imageCollectionViewCell?.indicator.stopAnimating()
+                            self.flowLayout?.invalidateLayout()
                         }
                     }
                 }
@@ -114,7 +116,13 @@ class ImageGalleryCollectionViewController: UIViewController, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return calculateSize(originalSize: imagesSize[indexPath.row])
+        let imageCollectionViewCell = collectionView.cellForItem(at: indexPath) as? ImageCollectionViewCell
+        if let indexOfUrl = imageCollectionViewCell?.indexOfUrl {
+            let url = imagesUrl[indexOfUrl]
+            let size = imagesSize[url]
+            return calculateSize(originalSize: size)
+        }
+        return CGSize(width: cellWidth, height: 100)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -145,27 +153,20 @@ class ImageGalleryCollectionViewController: UIViewController, UICollectionViewDa
         if let index = indexOfImageToDelete, index < imagesUrl.count {
             DispatchQueue.global(qos: .userInteractive).sync {
                 (self.imageGalleryCollectionView.cellForItem(at: IndexPath(row: index, section: 0)) as?ImageCollectionViewCell)?.isSelectedToBeDeleted = false
-                imagesUrl.remove(at: index)
-                imagesSize[index] = nil
+                let url = imagesUrl.remove(at: index)
+                imagesSize[url] = nil
                 indexOfImageToDelete = nil
                 delegate?.deleteUrl(index: index, galleryName: navigationItem.title!)
-                DispatchQueue.main.async {
-                   // self.imageGalleryCollectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
-                    self.imageGalleryCollectionView.reloadData()
+                imageGalleryCollectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
+                let itemsToUpdate = imageGalleryCollectionView.numberOfItems(inSection: 0)
+                for itemIndex in index..<itemsToUpdate {
+                    let cell = imageGalleryCollectionView.cellForItem(at: IndexPath(row: itemIndex, section: 0)) as? ImageCollectionViewCell
+                    cell?.indexOfUrl = cell!.indexOfUrl! - 1
                 }
             }
         }
     }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }
 extension ImageGalleryCollectionViewController: ImageCollectionViewCellDelegate {

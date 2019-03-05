@@ -16,16 +16,13 @@ class ImageGalleryTableViewController: UITableViewController {
     var galleryToUrlMap = [
         "carbs" : [URL(string: "https://i.dietdoctor.com/wp-content/uploads/2018/07/starchyfoods.jpg?auto=compress%2Cformat&w=800&h=388&fit=crop")!,
                    URL(string: "https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/05/28/Pictures/_c618b53a-6262-11e8-a998-12ee0acfa260.jpg")!,
-                   URL(string: "https://www.sparkpeople.com/news/genericpictures/bigpictures/carbtruth_header.png")!,
+                   URL(string: "https://sweetsimplevegan.com/wp-content/uploads/2018/05/Homemade_Pita_Bread_Sweet_Simple_Vegan-copy.jpg")!,
                    URL(string: "https://www.tasteofhome.com/wp-content/uploads/2018/01/exps32480_MRR153791D09_18_6b-2.jpg")!,
-                   URL(string: "https://www.deltaco.com/images/food/menu/thumbs/tacos/thumb_tacos.jpg?v=2")!,
+                   URL(string: "https://5.imimg.com/data5/TB/IF/MY-41399105/potato-500x500.jpg")!,
                    URL(string: "https://d3awvtnmmsvyot.cloudfront.net/api/file/6fTZjAw9Tjqf4XrddmRQ")!]
         
         , "guitars" : [URL(string: "https://images.reverb.com/image/upload/s--dfW9xmtS--/a_exif,c_limit,e_unsharp_mask:80,f_auto,fl_progressive,g_south,h_620,q_90,w_620/v1489275409/sicf27nru9awzyaxucig.jpg")!,
                        URL(string: "https://i.ytimg.com/vi/SRsciUOWkOc/maxresdefault.jpg")!]
-        , "carbs2" : [URL(string: "https://www.hindustantimes.com/rf/image_size_960x540/HT/p2/2018/05/28/Pictures/_c618b53a-6262-11e8-a998-12ee0acfa260.jpg")!,
-                      URL(string: "https://www.sparkpeople.com/news/genericpictures/bigpictures/carbtruth_header.png")!]
-        
     ]
     
     override func viewWillDisappear(_ animated: Bool) {
