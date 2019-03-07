@@ -9,6 +9,44 @@
 import UIKit
 
 class ImageGalleryTableViewController: UITableViewController {
+    
+    var gallariesModel: GalleriesModel {
+        get {
+            let myGallaries = galleries.map {
+                GalleriesModel.Gallery(imagesUrl: galleryToUrlMap[$0]!, name: $0)
+            }
+            let myRecentlyDeletedGallaries = recentlyDeleted.map {
+                GalleriesModel.Gallery(imagesUrl: galleryToUrlMap[$0]!, name: $0)
+            }
+            return GalleriesModel(galleries: myGallaries, deletedGalleries: myRecentlyDeletedGallaries)
+        }
+        
+        set(newModel) {
+            galleryToUrlMap = [String:[URL]]()
+            if newModel.myGalleries != nil  {
+                galleries = newModel.myGalleries!.map{
+                    $0.name
+                }
+                galleryToUrlMap = newModel.myGalleries!.reduce(into: [:]){$0[$1.name] = $1.imagesUrlWithSize.map{
+                    $0.url
+                    }
+                }
+            }
+            if newModel.myDeletedGalleries != nil  {
+                recentlyDeleted = newModel.myDeletedGalleries!.map{
+                    $0.name
+                }
+                
+                for gallery in newModel.myDeletedGalleries! {
+                    let galleryUrls = gallery.imagesUrlWithSize.map{
+                        $0.url
+                    }
+                    galleryToUrlMap[gallery.name] = galleryUrls
+                }
+            }
+        }
+    }
+    
     // datasource with some sample data,
     // so the app won't start without galleries
     var galleries = ["carbs", "guitars", "gallery1","carbs2"]

@@ -21,6 +21,7 @@
 		D30CDC67222BD71400FC4E3E /* ImageGalleryTabelViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30CDC66222BD71400FC4E3E /* ImageGalleryTabelViewCellDelegate.swift */; };
 		D30CDC69222C01EC00FC4E3E /* FullScreenScrollableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30CDC68222C01EC00FC4E3E /* FullScreenScrollableImageView.swift */; };
 		D30CDC6B222C35BC00FC4E3E /* ImageCollectionViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30CDC6A222C35BC00FC4E3E /* ImageCollectionViewCellDelegate.swift */; };
+		D32A95E822316CA200AA7FEF /* GalleriesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32A95E722316CA200AA7FEF /* GalleriesModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		D30CDC66222BD71400FC4E3E /* ImageGalleryTabelViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGalleryTabelViewCellDelegate.swift; sourceTree = "<group>"; };
 		D30CDC68222C01EC00FC4E3E /* FullScreenScrollableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenScrollableImageView.swift; sourceTree = "<group>"; };
 		D30CDC6A222C35BC00FC4E3E /* ImageCollectionViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCellDelegate.swift; sourceTree = "<group>"; };
+		D32A95E722316CA200AA7FEF /* GalleriesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleriesModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +78,7 @@
 				D30CDC532226942200FC4E3E /* supporting files */,
 				D30CDC42222693F000FC4E3E /* Main.storyboard */,
 				D30CDC68222C01EC00FC4E3E /* FullScreenScrollableImageView.swift */,
+				D32A95E722316CA200AA7FEF /* GalleriesModel.swift */,
 				D30CDC6022283B9400FC4E3E /* ImageGalleryCollectionViewControllerDelegate.swift */,
 				D30CDC5E2226D98200FC4E3E /* ImageGalleryCollectionViewController.swift */,
 				D30CDC5A2226C95800FC4E3E /* ImageCollectionViewCell.swift */,
@@ -178,6 +181,7 @@
 				D30CDC5B2226C95800FC4E3E /* ImageCollectionViewCell.swift in Sources */,
 				D30CDC3F222693F000FC4E3E /* AppDelegate.swift in Sources */,
 				D30CDC552226978F00FC4E3E /* ImageGalleryTableViewController.swift in Sources */,
+				D32A95E822316CA200AA7FEF /* GalleriesModel.swift in Sources */,
 				D30CDC6122283B9400FC4E3E /* ImageGalleryCollectionViewControllerDelegate.swift in Sources */,
 				D30CDC5F2226D98200FC4E3E /* ImageGalleryCollectionViewController.swift in Sources */,
 				D30CDC6B222C35BC00FC4E3E /* ImageCollectionViewCellDelegate.swift in Sources */,
