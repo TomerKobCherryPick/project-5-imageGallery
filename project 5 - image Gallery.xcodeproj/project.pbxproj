@@ -22,6 +22,7 @@
 		D30CDC69222C01EC00FC4E3E /* FullScreenScrollableImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30CDC68222C01EC00FC4E3E /* FullScreenScrollableImageView.swift */; };
 		D30CDC6B222C35BC00FC4E3E /* ImageCollectionViewCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30CDC6A222C35BC00FC4E3E /* ImageCollectionViewCellDelegate.swift */; };
 		D32A95E822316CA200AA7FEF /* GalleriesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32A95E722316CA200AA7FEF /* GalleriesModel.swift */; };
+		D32A95EA22359F0D00AA7FEF /* Gallery.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32A95E922359F0D00AA7FEF /* Gallery.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +43,7 @@
 		D30CDC68222C01EC00FC4E3E /* FullScreenScrollableImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenScrollableImageView.swift; sourceTree = "<group>"; };
 		D30CDC6A222C35BC00FC4E3E /* ImageCollectionViewCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCollectionViewCellDelegate.swift; sourceTree = "<group>"; };
 		D32A95E722316CA200AA7FEF /* GalleriesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleriesModel.swift; sourceTree = "<group>"; };
+		D32A95E922359F0D00AA7FEF /* Gallery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gallery.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 				D30CDC42222693F000FC4E3E /* Main.storyboard */,
 				D30CDC68222C01EC00FC4E3E /* FullScreenScrollableImageView.swift */,
 				D32A95E722316CA200AA7FEF /* GalleriesModel.swift */,
+				D32A95E922359F0D00AA7FEF /* Gallery.swift */,
 				D30CDC6022283B9400FC4E3E /* ImageGalleryCollectionViewControllerDelegate.swift */,
 				D30CDC5E2226D98200FC4E3E /* ImageGalleryCollectionViewController.swift */,
 				D30CDC5A2226C95800FC4E3E /* ImageCollectionViewCell.swift */,
@@ -175,6 +178,7 @@
 			files = (
 				D30CDC65222BBD4B00FC4E3E /* ImageGalleryTableViewCell.swift in Sources */,
 				D30CDC572226A88300FC4E3E /* Utilities.swift in Sources */,
+				D32A95EA22359F0D00AA7FEF /* Gallery.swift in Sources */,
 				D30CDC69222C01EC00FC4E3E /* FullScreenScrollableImageView.swift in Sources */,
 				D30CDC47222693F000FC4E3E /* project_5___image_Gallery.xcdatamodeld in Sources */,
 				D30CDC67222BD71400FC4E3E /* ImageGalleryTabelViewCellDelegate.swift in Sources */,

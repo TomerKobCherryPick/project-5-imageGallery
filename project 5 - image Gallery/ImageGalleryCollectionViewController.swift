@@ -9,6 +9,7 @@
 import UIKit
 
 class ImageGalleryCollectionViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    var cache: URLCache?
     weak var delegate: ImageGalleryCollectionViewControllerDelegate?
     @IBOutlet weak var urlTextField: UITextField! {
         didSet {
@@ -77,31 +78,66 @@ class ImageGalleryCollectionViewController: UIViewController, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageFromUrl", for: indexPath)
         if let imageCollectionViewCell = cell as? ImageCollectionViewCell {
-            imageCollectionViewCell.indexOfUrl = indexPath.row
             imageCollectionViewCell.delegate = self
-            //show the user that the images are being fetched
-            DispatchQueue.main.async { [weak imageCollectionViewCell] in
-                imageCollectionViewCell?.imageView.image = nil
-                imageCollectionViewCell?.indicator.startAnimating()
-            }
-            //start fetching the images
-            DispatchQueue.global(qos: .userInitiated).async {[weak imageCollectionViewCell] in
-                let urlToFetch = self.imagesUrl[imageCollectionViewCell!.indexOfUrl!]
-                let urlContents = try? Data(contentsOf: urlToFetch)
-                if let imageData = urlContents {
-                    self.imagesSize[urlToFetch] = UIImage(data: imageData)?.size
-                    //once image was found update the layout and the view for the cell
-                    DispatchQueue.main.async {
-                        if urlToFetch == self.imagesUrl[imageCollectionViewCell!.indexOfUrl!] {
-                            imageCollectionViewCell?.imageView.image = UIImage(data: imageData)
-                            imageCollectionViewCell?.indicator.stopAnimating()
-                            self.flowLayout?.invalidateLayout()
-                        }
-                    }
+            if imageCollectionViewCell.indexOfUrl != indexPath.row {
+                imageCollectionViewCell.indexOfUrl = indexPath.row
+                self.updateCell(fromURL: self.imagesUrl[imageCollectionViewCell.indexOfUrl!], toCell: imageCollectionViewCell, indexPath: indexPath)
+            } else {
+                DispatchQueue.main.async {
+                    self.flowLayout?.invalidateLayout()
                 }
             }
         }
         return cell
+    }
+    
+    private func updateCell(fromURL url: URL, toCell cell: ImageCollectionViewCell, indexPath: IndexPath){
+        //show the user that the images are being fetched
+        DispatchQueue.main.async {[weak cell] in
+            cell?.imageView.image = nil
+            cell?.indicator.startAnimating()
+        }
+        DispatchQueue.global(qos: .userInitiated).async {[weak cell] in
+            let request = URLRequest(url: url)
+            //if the image data is in the cache then we load the image To the cell
+            if let imageData = self.cache?.cachedResponse(for: request)?.data, let imageToLoad = UIImage(data: imageData) {
+                self.loadImageToCell(fromURL: url, toCell: cell, image: imageToLoad)
+            }
+                //else, we need to fetch the image
+            else {
+                URLSession.shared.dataTask(with: request, completionHandler: {[weak self] (data, response, error) in
+                    if let imageData = data, let response = response, ((response as? HTTPURLResponse)?.statusCode ?? 500) < 300, let imageToLoad = UIImage(data: imageData) {
+                        //if we got the image and it is valid then we cahce it and load image to cell
+                        let cachedData = CachedURLResponse(response: response, data: imageData)
+                        self?.cache?.storeCachedResponse(cachedData, for: request)
+                        self?.loadImageToCell(fromURL: url, toCell: cell, image: imageToLoad)
+                    } else {
+                        //else ,we romve it from the data, andf let the user know it is an invalid url
+                        if let index = self?.imagesUrl.lastIndex(of: url) {
+                            self?.imagesUrl.remove(at: index)
+                        }
+                        DispatchQueue.main.async {
+                            self?.urlTextField.text = "invalid url, try a different one"
+                            self?.imageGalleryCollectionView.deleteItems(at: [indexPath])
+                        }
+                    }
+                }).resume()
+            }
+            
+        }
+        
+        
+    }
+    //once image was found update the layout and the view for the cell, and update the model
+    func loadImageToCell(fromURL url: URL, toCell cell: ImageCollectionViewCell?, image: UIImage) {
+        DispatchQueue.main.async {[weak cell] in
+            if url == self.imagesUrl[cell!.indexOfUrl!] {
+                cell?.indicator.stopAnimating()
+                self.imagesSize[url] =  self.calculateSize(originalSize: image.size)
+                self.flowLayout?.invalidateLayout()
+                cell?.imageView.image = image
+            }
+        }
     }
     
     private func calculateSize(originalSize: CGSize?) ->  CGSize {

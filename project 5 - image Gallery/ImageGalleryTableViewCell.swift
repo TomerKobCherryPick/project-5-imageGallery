@@ -40,19 +40,30 @@ class ImageGalleryTableViewCell: UITableViewCell, UITextFieldDelegate {
     }
     
     @IBAction private func textFieldEditingChanged(_ sender: UITextField) {
-        if formerName != nil {
+       /* if formerName != nil {
             delegate?.changeName(formerName: formerName!, newName: nameOfGalleryText.text!)
-        }
+        }*/
     }
+    
      func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         return allowedToEditName == true
     }
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        changeName()
+        return true
+    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        changeName()
         textField.resignFirstResponder()
         return true
     }
     
+    private func changeName() {
+        if formerName != nil {
+            delegate?.changeName(formerName: formerName!, newName: nameOfGalleryText.text!)
+        }
+    }
     
 }
 

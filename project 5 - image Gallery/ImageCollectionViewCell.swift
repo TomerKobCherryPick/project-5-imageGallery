@@ -11,19 +11,17 @@ import UIKit
 class ImageCollectionViewCell: UICollectionViewCell {
     var isSelectedToBeDeleted = false {
         didSet {
-            imageView.alpha =  isSelectedToBeDeleted == true ? 0.4 : 1
+            DispatchQueue.main.async {
+                self.imageView.alpha =  self.isSelectedToBeDeleted == true ? 0.4 : 1
+            }
         }
     }
     weak var delegate: ImageCollectionViewCellDelegate?
     @IBOutlet weak var indicator: UIActivityIndicatorView!
     var indexOfUrl: Int?
+    var url: URL?
     @IBOutlet weak var imageView: UIImageView! {
         didSet {
-            if imageView.image == nil {
-               indicator?.startAnimating()
-            } else {
-               indicator?.stopAnimating()
-            }
             if gestureRecognizers == nil || gestureRecognizers?.count == 0 {
             let gesture = UILongPressGestureRecognizer(target: self, action: #selector(deleteImage))
             self.addGestureRecognizer(gesture)
